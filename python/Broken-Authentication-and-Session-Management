@@ -1,0 +1,43 @@
+# Non-Compliant Code
+import pymysql
+
+def account_lookup(session):
+    user_id = session["user_id"]
+    cookies = session["cookies"]
+    decoded_jwt = session["decoded_jwt"]
+
+    username = decoded_jwt['username']
+    current_users_id = get_user_id(username)
+
+    if not user_exists(username):
+        raise Exception("Bad Request")
+
+    if int(current_users_id) == int(user_id):
+        return get_account(user_id)
+
+    if not cookies.get('role') == "Administrator":
+        raise Exception("Access Denied: Administrator Access Required")
+
+    return get_account(user_id)
+
+# Compliant Code
+import pymysql
+
+def account_lookup(session):
+    user_id = session["user_id"]
+    cookies = session["cookies"]
+    decoded_jwt = session["decoded_jwt"]
+
+    username = decoded_jwt['username']
+    current_users_id = get_user_id(username)
+
+    if not user_exists(username):
+        raise Exception("Bad Request")
+
+    if int(current_users_id) == int(user_id):
+        return get_account(user_id)
+
+    if not decoded_jwt.get('role') == "Administrator":
+        raise Exception("Access Denied: Administrator Access Required")
+
+    return get_account(user_id)
